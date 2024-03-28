@@ -1,3 +1,5 @@
+![alt text](https://github.com/EASS-HIT-PART-A-2024-CLASS-IV/SneakerDealer/blob/main/bannercropped.jpg)
+
 # SneakerDealer 👟
 
 Welcome to the SneakerDealer project, a cutting-edge platform designed for the vibrant community of sneaker enthusiasts and collectors and allows users to share, buy, sell or trade sneakers.
