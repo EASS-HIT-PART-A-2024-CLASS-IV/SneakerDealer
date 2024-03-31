@@ -2,14 +2,14 @@ version: '3.8'
 
 services:
   users-service:
-    build: ./backend/users_service  # Corrected path
+    build: ./backend/users_service 
     ports:
       - "8000:8000"
     networks:
       - sneakers-net
 
   posts-service:
-    build: ./backend/posts_service  # Corrected path
+    build: ./backend/posts_service  
     ports:
       - "8001:8001"
     networks:
@@ -18,7 +18,7 @@ services:
       - users-service
 
   frontend:
-    build: ./frontend  # Update this path if different
+    build: ./frontend  
     ports:
       - "8501:8501"
     networks:
