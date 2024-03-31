@@ -7,7 +7,7 @@ mongo_uri = "mongodb+srv://admin:admin123123@cluster0.xrhcmq8.mongodb.net/?retry
 
 # For asynchronous operations using Motor
 async_client = AsyncIOMotorClient(mongo_uri)
-async_db = async_client['Posts_Database']  # Replace with your actual database name if different
+async_db = async_client['Posts_Database']  
 post_collection = async_db.posts
 reply_collection = async_db.reply
 image_collection = async_db.images
