@@ -19,8 +19,8 @@ USERS_SERVICE_URL = 'http://users-service:8000'
 POSTS_SERVICE_URL = 'http://posts-service:8001'
 
 
-def display_image(image_id, width=300):  # You can adjust the default width as needed
-    # Replace the below URL with your actual endpoint for image retrieval
+def display_image(image_id, width=300):  
+    
     image_response = requests.get(f"{POSTS_SERVICE_URL}/images/{image_id}")
     if image_response.status_code == 200:
         image_bytes = image_response.content
@@ -39,7 +39,6 @@ def get_replies_for_post(post_id):
             user_response = requests.get(f"{USERS_SERVICE_URL}/users/{reply['user_id']}")
             if user_response.status_code == 200:
                 user_info = user_response.json()
-                # Assuming the response contains a 'username' field
                 reply['username'] = user_info['username']
             else:
                 reply['username'] = "Unknown"
@@ -57,7 +56,6 @@ def add_reply(post_id, user_id, content):
         st.error('Failed to add reply.')
 
 def delete_reply(reply_id):
-    # Assuming the user_id is stored in the session and POSTS_SERVICE_URL is correctly defined
     user_id = st.session_state['user_id']
     response = requests.delete(f"{POSTS_SERVICE_URL}/replies/{reply_id}?user_id={user_id}")
     if response.status_code == 204:
@@ -100,7 +98,6 @@ def update_post_form(post_id):
 
 
 def delete_post(post_id):
-    # Assuming POSTS_SERVICE_URL is the URL of your posts service
     response = requests.delete(f"{POSTS_SERVICE_URL}/posts/{post_id}")
     if response.status_code == 204:  # Update condition to check for 204 status code
         return True  # Deletion successful
@@ -111,7 +108,7 @@ def render_post_management_section():
     st.header("Manage Your Posts")
 
     # Retrieve user's posts
-    user_id = st.session_state['user_id']  # Assuming the user_id is stored in the session
+    user_id = st.session_state['user_id']  
     user_posts = get_user_posts(user_id)
 
     if user_posts:
@@ -179,7 +176,6 @@ def search_posts(query):
         posts_response = response.json()
         for post in posts_response:
             user_id = post['user_id']
-            # Assuming there's an 'author_id' in post to fetch user details
             user_response = requests.get(f"{USERS_SERVICE_URL}/users/{user_id}")
             if user_response.status_code == 200:
                 user = user_response.json()
@@ -244,16 +240,8 @@ def add_post(title, content, uploaded_image):
     else:
         st.error('User ID not found in session. Please log in.')
 
-# Ensure the user_id is initialized in session state if it's not already set
-# if 'user_id' not in st.session_state:
-#     st.session_state['user_id'] = None
-
-
-
-
 # Helper functions to convert user document from database to a dictionary
 def user_helper(user) -> dict:
-    # Assuming you have a user model with these fields
     return {
         "id": str(user["_id"]),
         "username": user["username"],
@@ -300,7 +288,6 @@ def login_user(username, password):
             st.session_state['username'] = username
             st.session_state['user_id'] = user_id  # Set user_id here
             
-            # Optional: Print or log for debugging
             print("User ID set in session state:", st.session_state['user_id'])
         else:
             st.error('Login failed: User ID not returned from the server.')
@@ -323,8 +310,6 @@ def render_sidebar_menu():
             st.session_state.clear()
             st.experimental_rerun()
     else:
-        # if not st.session_state['token']:
-        #     st.sidebar.write("Please log in.")
         rain(
         emoji="👟",
         font_size=54,
@@ -500,8 +485,6 @@ def handle_menu_choice(choice):
     elif choice == "Manage Blog 🔨":
         st.subheader("Manage Blog")
         render_post_management_section()
-        # Display blog management functionality here
-
 
 # Function to show register user form
 def register_user_form():
@@ -531,7 +514,6 @@ def main():
     if 'token' not in st.session_state:
         st.session_state['token'] = None      
 
-    # Render the sidebar menu
     render_sidebar_menu()
 
     # Check if the user is logged in and display the main page
