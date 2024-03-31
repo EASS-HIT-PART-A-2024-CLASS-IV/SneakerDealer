@@ -4,7 +4,7 @@ mongo_uri = "mongodb+srv://admin:admin123123@cluster0.xrhcmq8.mongodb.net/?retry
 
 from pydantic import BaseModel
 from typing import Optional
-from uuid import UUID  # Corrected import
+from uuid import UUID 
 
 class PostBase(BaseModel):
     title: str
