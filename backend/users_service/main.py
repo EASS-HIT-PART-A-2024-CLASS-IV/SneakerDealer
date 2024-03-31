@@ -46,7 +46,6 @@ async def create_user(user: UserCreateSchema):
         created_user = await user_collection.find_one({"_id": new_user.inserted_id})
         logger.info(f"User {user.username} created successfully")
 
-        # Add this part to return the user's ID in the response
         user_id = str(new_user.inserted_id)
         return {"user_id": user_id, **user_helper(created_user)}
 
@@ -60,8 +59,6 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     user = await user_collection.find_one({"username": form_data.username})
     if not user or not bcrypt.checkpw(form_data.password.encode('utf-8'), user["hashed_password"].encode('utf-8')):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
-    # The following line should include 'user_id' in the response
     return {"access_token": user["username"], "token_type": "bearer", "user_id": str(user["_id"])}
 
-# Additional endpoints and functions as needed...
 
